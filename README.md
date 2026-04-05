@@ -11,8 +11,10 @@
   <a href="https://streamlit.io"><img src="https://img.shields.io/badge/Streamlit-Web_UI-ff4b4b?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit" /></a>
   <a href="https://click.palletsprojects.com"><img src="https://img.shields.io/badge/Click-CLI-4EAA25?style=for-the-badge&logo=gnu-bash&logoColor=white" alt="Click CLI" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-eab308?style=for-the-badge" alt="License" /></a>
+  <img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white"/>
 
-  <br/><br/>
+  
+<img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white"/><br/><br/>
 
   <strong>AI-powered support ticket classification with priority queues, SLA tracking, team routing, auto-responses, and analytics — 100 % local via Ollama.</strong>
 
@@ -221,7 +223,84 @@ Classifying tickets... ━━━━━━━━━━━━━━━━━━━
 ╰───────────────────────────────────────────────╯
 ```
 
+
+## 🐳 Docker Deployment
+
+Run this project instantly with Docker — no local Python setup needed!
+
+### Quick Start with Docker
+
+```bash
+# Clone and start
+git clone https://github.com/kennedyraju55/support-ticket-classifier.git
+cd support-ticket-classifier
+docker compose up
+
+# Access the web UI
+open http://localhost:8501
+```
+
+### Docker Commands
+
+| Command | Description |
+|---------|-------------|
+| `docker compose up` | Start app + Ollama |
+| `docker compose up -d` | Start in background |
+| `docker compose down` | Stop all services |
+| `docker compose logs -f` | View live logs |
+| `docker compose build --no-cache` | Rebuild from scratch |
+
+### Architecture
+
+```
+┌─────────────────┐     ┌─────────────────┐
+│   Streamlit UI  │────▶│   Ollama + LLM  │
+│   Port 8501     │     │   Port 11434    │
+└─────────────────┘     └─────────────────┘
+```
+
+> **Note:** First run will download the Gemma 4 model (~5GB). Subsequent starts are instant.
+
 ---
+
+
+---
+
+
+---
+
+## ⚡ REST API
+
+Every project includes a FastAPI REST API with auto-generated docs.
+
+### Start the API Server
+
+```bash
+# Run directly
+uvicorn src.ticket_classifier.api:app --reload --port 8000
+
+# Or with Docker
+docker compose up
+```
+
+### API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/health` | Health check |
+| `GET` | `/docs` | Interactive Swagger UI |
+| `GET` | `/redoc` | ReDoc documentation |
+| `POST` | `/analyze` | Main analysis endpoint |
+
+### Example Request
+
+```bash
+curl -X POST http://localhost:8000/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"text": "your input here"}'
+```
+
+> 📖 Visit `http://localhost:8000/docs` for the full interactive API documentation.
 
 ## 💻 CLI Reference
 
